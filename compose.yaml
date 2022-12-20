@@ -1,0 +1,58 @@
+
+services:
+  rootns:
+    image: ubuntu/bind9:latest
+    container_name: rootns
+    ports:
+      - "10053:53"
+    volumes:
+      - rootns_etc:/etc/bind
+      - rootns_rr:/var/lib/bind
+    networks:
+      3mindns:
+        ipv4_address: 192.168.1.1
+  subns:
+    image: ubuntu/bind9:latest
+    container_name: subns
+    ports:
+      - "20053:53"
+    volumes:
+      - subns_etc:/etc/bind
+      - subns_rr:/var/lib/bind
+    networks:
+      3mindns:
+        ipv4_address: 192.168.1.2
+  server1:
+    image: ubuntu:22.04
+    container_name: server1
+    hostname: server1
+    networks:
+      3mindns:
+        ipv4_address: 192.168.1.11
+    volumes:
+      - ./main:/srv/main
+    command: /bin/bash -c "/srv/main"
+  server2:
+    image: ubuntu:22.04
+    container_name: server2
+    hostname: server2
+    networks:
+      3mindns:
+        ipv4_address: 192.168.1.12
+    volumes:
+      - ./main:/srv/main
+    command: /bin/bash -c "/srv/main"
+
+networks:
+  3mindns:
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.0.0/20
+
+
+volumes:
+  rootns_etc:
+  rootns_rr:
+  subns_etc:
+  subns_rr:

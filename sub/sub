@@ -1,0 +1,12 @@
+$TTL 60
+@       IN      SOA sub.hijiki51. root.sub.hijiki51. (
+        2;
+        600;
+        600;
+        600;
+        600;
+);
+
+        IN      NS ns.sub.hijiki51.
+ns      IN      A 192.168.1.2
+s2      IN      A 192.168.1.12

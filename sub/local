@@ -1,0 +1,6 @@
+
+
+zone "sub.hijiki51" IN {
+        type master;
+        file "/etc/bind/rr/sub";
+};
